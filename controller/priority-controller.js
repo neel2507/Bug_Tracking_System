@@ -1,4 +1,4 @@
-const PriorityModel = require("../Model/priority-model")
+const PriorityModel = require("../model/priority-model")
 
 //add data to table
 module.exports.addPriority=function (req,res){

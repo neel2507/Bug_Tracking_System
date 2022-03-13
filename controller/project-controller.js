@@ -1,4 +1,4 @@
-const ProjectModel = require("../Model/project-model")
+const ProjectModel = require("../model/project-model")
 
 //add data to table
 module.exports.addProject=function (req,res){
@@ -9,7 +9,6 @@ module.exports.addProject=function (req,res){
     const estimatedHours = req.body.estimatedHours
     //const startDate = req.body.startDate
     const complitionHours = req.body.complitionHours
-    const statusId = req.body.statusId
 
     
     let project = new ProjectModel({
@@ -20,7 +19,7 @@ module.exports.addProject=function (req,res){
         estimatedHours:estimatedHours,
       //  startDate:startDate,
         complitionHours:complitionHours,
-        statusId:statusId
+        statusId:"622b5606f4370ecb2982e488"
     })
     project.save(function(err,success){
         if(err){
@@ -34,12 +33,13 @@ module.exports.addProject=function (req,res){
 }
 //list
 module.exports.getAllProject = function(req,res){
-    ProjectModel.find().populate("status").exec(function(err,roles){
+    ProjectModel.find().populate("statusId").populate("projectManagerID").exec(function(err,project){
         if(err){
-            res.json({msg:"Something Wrong",status:-1,data:req.body})
+            //console.log(err);
+            res.json({msg:"Something Wrong",status:-1,data:err})
         }
         else{
-            res.json({msg:"Data Retraive",status:200,data:roles})
+            res.json({msg:"Data Retraive",status:200,data:project})
         }
     })
 }
@@ -56,17 +56,32 @@ module.exports.deleteProject = function(req,res){
     })
 }
 //update
-module.exports.updateproject = function(req,res){
+module.exports.updateProject = function(req,res){
     let projectId = req.body.projectId
     let projectTitle = req.body.projectTitle
     let description = req.body.description
+    let projectManagerID = req.body.projectManagerID
+    let estimatedHours = req.body.estimatedHours
+   // let statusId = req.body.statusId
 
-    ProjectModel.updateOne({_id:projectId},{projectTitle:projectTitle},{description:description},function(err,data){
+    ProjectModel.updateOne({_id:projectId},{projectTitle:projectTitle,description:description,projectManagerID:projectManagerID,estimatedHours:estimatedHours},function(err,data){
         if(err){
             res.json({msg:"Something Wrong",status:-1,data:req.body})
         }
         else{
             res.json({msg:"Data Updated",status:200,data:data})
+        }
+    })
+}
+
+module.exports.getProjectById = function(req,res){
+    let projectId = req.params.projectId
+    ProjectModel.findOne({_id:projectId},function(err,data){
+        if(err){
+            res.json({msg:"Something Wrong",status:-1,data:err})
+        }
+        else{
+            res.json({msg:"Data Retraive",status:200,data:data})
         }
     })
 }

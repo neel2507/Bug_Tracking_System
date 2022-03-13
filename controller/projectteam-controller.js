@@ -1,4 +1,4 @@
-const ProjectTeamModel = require("../Model/projectTeam-model")
+const ProjectTeamModel = require("../model/projectTeam-model")
 
 //add data to table
 module.exports.addProjectTeamMember=function (req,res){
@@ -23,7 +23,7 @@ module.exports.addProjectTeamMember=function (req,res){
 }
 //list
 module.exports.getAllProjectMember = function(req,res){
-    ProjectTeamModel.find(function(err,roles){
+    ProjectTeamModel.find().populate("projectTeamMember").populate("ProjectId").populate("projectTemStatus").exec(function(err,roles){
         if(err){
             res.json({msg:"Something Wrong",status:-1,data:req.body})
         }

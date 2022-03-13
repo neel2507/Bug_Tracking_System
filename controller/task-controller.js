@@ -10,34 +10,34 @@ module.exports.addTask = function (req, res) {
     let startDate = req.body.startDate
     let moduleId = req.body.moduleId
     let projectId= req.body.projectId
-    let statusId = 1
+    let statusId = req.body.statusId
+    let priorityId = req.body.priorityId
 
-    let user = new taskModel({
+    let task = new TaskModel({
         taskName: taskName,
         description: description,
         totalTime: totalTime,
         startDate: startDate,
-        priorityId :priorityId,
+        projectId :projectId,
         moduleId:moduleId,
-        statusId:statusId
+        statusId:statusId,
+        priorityId:priorityId
     })
 
-
-
-    module.save(function (err, data) {
+    task.save(function (err, data) {
         if (err) {
-            res.json({ msg: "SMW", data: err, status: -1 })//-1  [ 302 404 500 ]
+            res.json({ msg: "something wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
         } else {
-            res.json({ msg: "signup done", data: data, status: 200 })//http status code 
+            res.json({ msg: "task added", data: data, status: 200 })//http status code 
         }
     })
 
 
 }
 //list
-module.exports.getAlltask = function (req, res) {
+module.exports.getAllTask = function (req, res) {
 
-    taskModel.find().populate("priority").populate("module").exec(function (err, data) {
+    TaskModel.find().populate("priorityId").populate("statusId").populate(moduleId).exec(function (err, data) {
         if (err) {
             res.json({ msg: "Somthing went wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
         } else {
@@ -47,11 +47,11 @@ module.exports.getAlltask = function (req, res) {
 }
 
 //delete
-module.exports.deletetask = function(req,res){
+module.exports.deleteTask = function(req,res){
     //params userid 
     let taskId = req.params.taskId //postman -> userid 
 
-    taskModel.deleteOne({_id:taskId},function (err, data) {
+    TaskModel.deleteOne({_id:taskId},function (err, data) {
         if (err) {
             res.json({ msg: "Somthing went wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
         } else {
@@ -62,7 +62,7 @@ module.exports.deletetask = function(req,res){
 
 
 //update 
-module.exports.updatetask = function(req,res){
+module.exports.updateTask = function(req,res){
     //params userid 
     let taskId = req.body.taskId //postman -> userid 
     let taskName = req.body.taskName

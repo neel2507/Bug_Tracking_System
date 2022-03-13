@@ -5,9 +5,9 @@ statusName:{
     type:String
     },
 isActive:{
-    type:Number
+    type:Boolean
     }
 })
 //modal
 const StatusModel = mongoose.model("status",StatusSchema)
-module.exports = StatusModel;
+module.exports = StatusModel

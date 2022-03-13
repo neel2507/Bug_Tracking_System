@@ -10,9 +10,9 @@ module.exports.addModule = function (req, res) {
     let startDate = req.body.startDate
     let priorityId = req.body.priorityId
     let projectId= req.body.projectId
-    let statusId = 1
+    let statusId = "622b5606f4370ecb2982e488"
 
-    let user = new moduleModel({
+    let module = new ModuleModel({
         moduleName: moduleName,
         description: description,
         estimatedTime: estimatedTime,
@@ -22,13 +22,11 @@ module.exports.addModule = function (req, res) {
         statusId:statusId
     })
 
-
-
     module.save(function (err, data) {
         if (err) {
-            res.json({ msg: "SMW", data: err, status: -1 })//-1  [ 302 404 500 ]
+            res.json({ msg: "something wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
         } else {
-            res.json({ msg: "signup done", data: data, status: 200 })//http status code 
+            res.json({ msg: "module Added", data: data, status: 200 })//http status code 
         }
     })
 
@@ -37,9 +35,9 @@ module.exports.addModule = function (req, res) {
 //list
 module.exports.getAllmodule = function (req, res) {
 
-    moduleModel.find().populate("priority").populate("project").exec(function (err, data) {
+    ModuleModel.find().populate("priorityId").populate("projectId").populate("statusId").exec(function (err, data) {
         if (err) {
-            res.json({ msg: "Somthing went wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
+            res.json({ msg: "Somthing wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
         } else {
             res.json({ msg: "module ret...", data: data, status: 200 })//http status code 
         }
@@ -47,11 +45,11 @@ module.exports.getAllmodule = function (req, res) {
 }
 
 //delete
-module.exports.deletemodule = function(req,res){
+module.exports.deleteModule = function(req,res){
     //params userid 
     let moduleId = req.params.moduleId //postman -> userid 
 
-    moduleModel.deleteOne({_id:moduleId},function (err, data) {
+    ModuleModel.deleteOne({_id:moduleId},function (err, data) {
         if (err) {
             res.json({ msg: "Somthing went wrong", data: err, status: -1 })//-1  [ 302 404 500 ]
         } else {
@@ -62,7 +60,7 @@ module.exports.deletemodule = function(req,res){
 
 
 //update 
-module.exports.updatemodule = function(req,res){
+module.exports.updateModule = function(req,res){
     //params userid 
     let moduleId = req.body.moduleId //postman -> userid 
     let moduleName = req.body.moduleName

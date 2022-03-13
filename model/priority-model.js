@@ -5,9 +5,9 @@ priorityName:{
     type:String
     },
 isActive:{
-    type:Number
+    type:Boolean
     }
 })
 //modal
 const PriorityModel = mongoose.model("priority",PrioritySchema)
-module.exports = PriorityModel;
+module.exports = PriorityModel

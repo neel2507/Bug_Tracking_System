@@ -1,5 +1,5 @@
-const TaskUserModel = require("../Model/taskUser-model")
-const taskUserModel = require("../Model/taskUser-model")
+const TaskUserModel = require("../model/taskUser-model")
+const taskUserModel = require("../model/taskUser-model")
 
 //add data to table
 module.exports.addTaskUser=function (req,res){
@@ -22,7 +22,7 @@ module.exports.addTaskUser=function (req,res){
 }
 //list
 module.exports.getAllTaskUser = function(req,res){
-    TaskUserModel.find(function(err,roles){
+    TaskUserModel.find().populate("taskUser").populate("taskId").exec(function(err,roles){
         if(err){
             res.json({msg:"Something Wrong",status:-1,data:req.body})
         }

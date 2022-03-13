@@ -16,4 +16,4 @@ projectTeamStatus:{
 })
 //modal
 const ProjectTeamModel = mongoose.model("projectTeam",ProjectTeamSchema)
-module.exports = ProjectTeamModel;
+module.exports = ProjectTeamModel

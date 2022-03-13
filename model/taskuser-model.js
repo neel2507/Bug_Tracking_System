@@ -12,4 +12,4 @@ taskUser:{
 })
 //modal
 const TaskUserModel = mongoose.model("taskUser",TaskUserSchema)
-module.exports = TaskUserModel;
+module.exports = TaskUserModel

@@ -1,12 +1,14 @@
 const mongoose = require("mongoose")
 
-//sechema
 let RoleSchema = new mongoose.Schema({
-   roleName:{
-       type:String
-   }
+roleName:{
+    type:String
+    },
+isActive:{
+    type:Boolean
+}
 })
-
-//model
+//modal
 let RoleModel = mongoose.model("role",RoleSchema)
+
 module.exports = RoleModel
